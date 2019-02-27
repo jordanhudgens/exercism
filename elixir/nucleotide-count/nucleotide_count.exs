@@ -4,7 +4,7 @@ defmodule NucleotideCount do
   @doc """
   Counts individual nucleotides in a DNA strand.
 
-  ## Examples
+  ## Example
 
   iex> NucleotideCount.count('AATAA', ?A)
   4
@@ -14,11 +14,6 @@ defmodule NucleotideCount do
   """
   @spec count([char], char) :: non_neg_integer
   def count(strand, nucleotide) do
-    # strand |> String.graphemes |> Enum.count(& &1 == [nucleotide])
-    # len = strand |> String.split([nucleotide]) |> length()
-    # total = len - 1
-      # require IEx; IEx.pry()
-
     if length(strand) == 0 do
       0
     else
@@ -36,7 +31,10 @@ defmodule NucleotideCount do
   """
   @spec histogram([char]) :: map
   def histogram(strand) do
+    # require IEx; IEx.pry
+    # IO.inspect binding()
+    IO.puts(@nucleotides)
   end
 end
 
-NucleotideCount.count('CCCFACSA', ?A)
+NucleotideCount.histogram('CCCFACSA')
