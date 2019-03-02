@@ -14,14 +14,15 @@ class Matrix
   end
 
   def columns
-    count = rows.count - 1
-    column_array = Array.new(count) { Array.new }
-
-    count.times do |i|
-      rows.each { |row| column_array[i].push row[i] }
-    end
-
-    column_array
+    # count = rows.count - 1
+    # column_array = Array.new(count) { Array.new }
+    #
+    # count.times do |i|
+    #   rows.each { |row| column_array[i].push row[i] }
+    # end
+    #
+    # column_array
+    rows.transpose
   end
 end
 
