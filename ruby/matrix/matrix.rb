@@ -14,7 +14,14 @@ class Matrix
   end
 
   def columns
-    # TODO
+    count = rows.count - 1
+    column_array = Array.new(count) { Array.new }
+
+    count.times do |i|
+      rows.each { |row| column_array[i].push row[i] }
+    end
+
+    column_array
   end
 end
 
