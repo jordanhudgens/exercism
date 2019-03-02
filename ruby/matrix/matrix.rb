@@ -1,5 +1,3 @@
-require 'pry'
-
 class Matrix
   def initialize(str)
     @str = str
