@@ -8,9 +8,12 @@ class HighScores(object):
     def latest(self):
         return self.scores[-1]
 
+    def sorted_scores(self):
+        return sorted(self.scores, reverse=True)
+
     def personal_best(self):
-        return sorted(self.scores, reverse=True)[0]
+        return self.sorted_scores()[0]
 
     def personal_top_three(self):
-        return sorted(self.scores, reverse=True)[0:3]
+        return self.sorted_scores()[0:3]
 
