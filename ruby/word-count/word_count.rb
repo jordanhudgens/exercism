@@ -1,20 +1,22 @@
 class Phrase
-  def initialize strOfWords
-    @strOfWords = strOfWords
+  WORDS_REGEX = /\b[\w']+\b/
+  private_constant :WORDS_REGEX
+
+  def initialize(word_string)
+    @word_string = word_string
+  end
+
+  def words
+    word_string.scan(WORDS_REGEX)
   end
 
   def word_count
-    str_with_punctuation_removed = @strOfWords.downcase.gsub(/[^[:word:]|'\s]/, ' ')
-    words_array = str_with_punctuation_removed.split(" ")
-    words_array.each_with_object({}) do |word, hash|
-      if word[0] == "'" || word[-1] == "'"
-        word.gsub!(/[^[:word:]\s]/, '')
-      end
-      if hash[word]
-        hash[word] = hash[word] + 1
-      else
-        hash[word] = 1
-      end
+    words.each_with_object(Hash.new(0)) do |word, hash|
+      hash[word.downcase] += 1
     end
   end
+
+  private
+
+  attr_reader :word_string
 end
