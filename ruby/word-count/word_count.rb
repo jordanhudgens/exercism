@@ -7,6 +7,9 @@ class Phrase
     str_with_punctuation_removed = @strOfWords.downcase.gsub(/[^[:word:]|'\s]/, ' ')
     words_array = str_with_punctuation_removed.split(" ")
     words_array.each_with_object({}) do |word, hash|
+      if word[0] == "'" || word[-1] == "'"
+        word.gsub!(/[^[:word:]\s]/, '')
+      end
       if hash[word]
         hash[word] = hash[word] + 1
       else

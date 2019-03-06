@@ -74,7 +74,7 @@ class WordCountTest < Minitest::Test
   end
 
   def test_multiple_spaces_not_detected_as_a_word
-    skip
+    # skip
     phrase = Phrase.new(" multiple   whitespaces")
     counts = {"multiple"=>1, "whitespaces"=>1}
     assert_equal counts, phrase.word_count
