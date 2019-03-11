@@ -16,3 +16,10 @@ module Isogram
     is_isogram
   end
 end
+
+# module Isogram
+#   def self.isogram?(candidate)
+#     letters = candidate.downcase.scan(/[a-z]/)
+#     letters.uniq == letters
+#   end
+# end
