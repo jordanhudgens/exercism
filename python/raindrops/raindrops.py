@@ -5,5 +5,9 @@ def raindrops(number):
         "Plong": 7
     }
 
-    # >>> [k if 35 % v ==0 for k, v in RAINDROP_TYPES.items()]
-    # https://www.datacamp.com/community/tutorials/python-dictionary-comprehension
+    raindrop_str =  "".join([k for k, v in RAINDROP_TYPES.items() if number % v == 0])
+
+    if raindrop_str == "":
+        return str(number)
+    else:
+        return raindrop_str
