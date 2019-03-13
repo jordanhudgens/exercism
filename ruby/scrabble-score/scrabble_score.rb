@@ -10,6 +10,10 @@ class Scrabble
     end
   end
 
+  def self.score letters
+    self.new(letters).score
+  end
+
   private
 
   def letters_without_whitespace
@@ -41,5 +45,3 @@ class Scrabble
     end
   end
 end
-
-Scrabble.new('quirky').score
