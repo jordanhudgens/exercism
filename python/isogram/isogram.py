@@ -10,3 +10,4 @@ def is_isogram(string):
         if v > 1:
             return False
 
+    return True
