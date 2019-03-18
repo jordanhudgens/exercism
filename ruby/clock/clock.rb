@@ -1,5 +1,5 @@
 class Clock
-  def initialize(hour:, minute: 0)
+  def initialize(hour: 0, minute: 0)
     @hour   = hour_rules(hour)
     @minute = minute_rules(minute)
   end
@@ -21,6 +21,11 @@ class Clock
   end
 
   def minute_rules(minute)
-    minute
+    if minute >= 60
+      @hour += minute / 60
+      minute % 60
+    else
+      minute
+    end
   end
 end
