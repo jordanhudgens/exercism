@@ -22,7 +22,12 @@ class Clock
 
   def minute_rules(minute)
     if minute >= 60
-      @hour += minute / 60
+      if minute / 60 > 24
+        @hour += (minute / 60) - 24
+      else
+        @hour += minute / 60
+      end
+
       minute % 60
     else
       minute
