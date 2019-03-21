@@ -15,6 +15,12 @@ class Clock
   def hour_rules(hour)
     if hour >= 24
       hour % 24
+    elsif hour < 0
+      if hour.abs > 24
+        24 - hour.abs % 24
+      else
+        24 - hour.abs
+      end
     else
       hour
     end
@@ -34,3 +40,5 @@ class Clock
     end
   end
 end
+
+Clock.new(hour: -1).to_s # => "23:00"
