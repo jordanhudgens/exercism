@@ -35,10 +35,13 @@ class Clock
       end
 
       minute % 60
+    elsif minute < 0
+      @hour = @hour - (60 / minute.abs)
+      60 - minute.abs
     else
       minute
     end
   end
 end
 
-Clock.new(hour: -1).to_s # => "23:00"
+Clock.new(hour: 1, minute: -40).to_s # => "00:20"
