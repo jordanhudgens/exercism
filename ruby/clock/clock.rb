@@ -46,7 +46,7 @@ class Clock
         @hour = hour_rules(@hour - minute.abs / 60)
         0
       else
-        @hour = @hour - (60 / minute.abs)
+        @hour = @hour - (60 / minute.abs) + 1
         60 - minute.abs
       end
     else
@@ -67,3 +67,10 @@ class Clock
   end
 end
 
+clock1 = Clock.new(hour: 10, minute: 3)
+# assert_equal "09:33", (clock1 - Clock.new(minute: 30)).to_s
+(clock1 - Clock.new(minute: 30)).to_s
+
+
+# assert_equal "00:20", Clock.new(hour: 1, minute: -40).to_s
+Clock.new(hour: 1, minute: -40).to_s
