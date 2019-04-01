@@ -59,5 +59,11 @@ class Clock
     @hour = hour_rules(other_clock.hour + @hour)
     self
   end
+
+  def -(other_clock)
+    @minute = minute_rules(@minute - other_clock.minute)
+    @hour = hour_rules(@hour - other_clock.hour)
+    self
+  end
 end
 
