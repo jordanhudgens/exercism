@@ -47,7 +47,7 @@ class Clock
         0
       else
         minute.abs                                       # => 27
-        60 / minute.abs
+        60 / minute.abs                                  # => 2
         @hour                                            # => 10
         @hour = hour_rules(@hour - (60 / minute.abs))    # => 8
         60 - minute.abs                                  # => 33
@@ -66,10 +66,10 @@ class Clock
   def -(other_clock)
     @minute = minute_rules(@minute - other_clock.minute)  # => 33
     @hour = hour_rules(@hour - other_clock.hour)          # => 8
-    self                                                  # => #<Clock:0x007f9c5b916438 @hour=8, @minute=33>
+    self                                                  # => #<Clock:0x007ffe1f037940 @hour=8, @minute=33>
   end                                                     # => :-
 end                                                       # => :-
 
-clock1 = Clock.new(hour: 10, minute: 3)  # => #<Clock:0x007f9c5b916438 @hour=10, @minute=3>
+clock1 = Clock.new(hour: 10, minute: 3)  # => #<Clock:0x007ffe1f037940 @hour=10, @minute=3>
 # assert_equal "09:33", (clock1 - Clock.new(minute: 30)).to_s
 (clock1 - Clock.new(minute: 30)).to_s    # => "08:33"
