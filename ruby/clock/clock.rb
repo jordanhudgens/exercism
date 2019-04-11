@@ -68,5 +68,12 @@ class Clock
     @hour = hour_rules(@hour - other_clock.hour)
     self
   end
+
+  def ==(other_clock)
+    self.to_s == other_clock.to_s
+  end
 end
 
+clock1 = Clock.new(hour: 0, minute: 1)
+clock2 = Clock.new(hour: 0, minute: 1441)
+clock1 == clock2
