@@ -74,6 +74,6 @@ class Clock
   end
 end
 
-clock1 = Clock.new(hour: 0, minute: 1)
-clock2 = Clock.new(hour: 0, minute: 1441)
-clock1 == clock2
+clock1 = Clock.new(hour: 0, minute: 1) # => #<Clock:0x007ff8bc9ca8a8 @hour=0, @minute=1>
+clock2 = Clock.new(hour: 0, minute: 1441) # => #<Clock:0x007ff8bc9ca588 @hour=24, @minute=1>
+clock1 == clock2 # => false
