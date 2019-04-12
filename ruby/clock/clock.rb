@@ -1,76 +1,26 @@
 class Clock
-  attr_reader :hour, :minute
+  attr_reader :minutes
+
+  MINUTES_IN_HOUR = 60
+  MINUTES_IN_DAY = 24 * MINUTES_IN_HOUR
 
   def initialize(hour: 0, minute: 0)
-    @hour   = hour_rules(hour)
-    @minute = minute_rules(minute)
+    @minutes = (minute + hour * MINUTES_IN_HOUR) % MINUTES_IN_DAY
   end
 
   def to_s
-    "#{formatted_time(@hour)}:#{formatted_time(@minute)}"
+    '%02d:%02d' % [minutes / MINUTES_IN_HOUR, minutes % MINUTES_IN_HOUR]
   end
 
-  def formatted_time(time)
-    time.to_s.length == 1 ? "0#{time}" : time
+  def +(clock)
+    Clock.new(minute: minutes + clock.minutes)
   end
 
-  def hour_rules(hour)
-    if hour >= 24
-      hour % 24
-    elsif hour < 0
-      hour
-      if hour.abs > 24
-        24 - hour.abs % 24
-      else
-        24 - hour.abs
-      end
-    else
-      hour
-    end
+  def -(clock)
+    Clock.new(minute: minutes - clock.minutes)
   end
 
-  def minute_rules(minute)
-    if minute >= 60
-      if minute / 60 > 24
-        @hour = hour_rules(@hour + ((minute / 60) - 24))
-      else
-        @hour = hour_rules(@hour + minute / 60)
-      end
-
-      minute % 60
-    elsif minute < 0
-      if minute.abs > 60
-        @hour = hour_rules(@hour - minute.abs / 60) - 1
-        60 - (minute.abs % 60)
-      elsif minute.abs == 60
-        @hour = hour_rules(@hour - minute.abs / 60)
-        0
-      else
-        minute.abs
-        60 / minute.abs
-        @hour
-        @hour = hour_rules(@hour - 1)
-        60 - minute.abs
-      end
-    else
-      minute
-    end
-  end
-
-  def +(other_clock)
-    @minute = minute_rules(other_clock.minute + @minute)
-    @hour = hour_rules(other_clock.hour + @hour)
-    self
-  end
-
-  def -(other_clock)
-    @minute = minute_rules(@minute - other_clock.minute)
-    @hour = hour_rules(@hour - other_clock.hour)
-    self
-  end
-
-  def ==(other_clock)
-    self.to_s == other_clock.to_s
+  def ==(clock)
+    minutes == clock.minutes
   end
 end
-
