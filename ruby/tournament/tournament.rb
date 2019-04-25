@@ -1,4 +1,4 @@
- MP: Matches Played
+# MP: Matches Played
 # W: Matches Won
 # D: Matches Drawn (Tied)
 # L: Matches Lost
@@ -6,14 +6,13 @@
 # A win earns a team 3 points. A draw earns 1. A loss earns 0.
 
 class Tournament
-  attr_accessor :tournament_data
-
   def initialize(input)
     # have program automatically generate the score
     # and store in the tally value,
     # need to keep track of all teams since they
     # can show up multiple times
-    self.tournament_data = input
+    @tournament_data = input
+    scoreboard_data = team_builder
   end
 
   def self.tally(input)
@@ -23,18 +22,39 @@ class Tournament
   end
 
   def team_builder
-    self.tournament_data
+    raw_data_as_array_from_str = @tournament_data
+      .split("\n")
+      .map { |game| game.split(";") }
+
+    raw_data_as_array_from_str.each_with_object({}) do |game, hash|
+      if hash[game[0]]
+        hash_el = hash[game[0]]
+
+        hash_el = {
+          MP: hash_el[:MP] + 1,
+          W:  (game[2] == 'win'  ? (hash_el[:W] + 1) : hash_el[:W]),
+          D:  (game[2] == 'draw' ? (hash_el[:D] + 1) : hash_el[:D]),
+          L:  (game[2] == 'loss' ? (hash_el[:L] + 1) : hash_el[:L])
+        }
+      else
+        # TODO
+        # Need to populate initial scorecard
+        # Then add to the data
+        hash[game[0]] = empty_scorecard
+      end
+
+      hash
+    end
   end
 
-  def self.score_generator(game)
-    game_arr = game.split(";")
-    team_one = game_arr[0]
-    team_two = game_arr[1]
-    result   = game_arr[2]
-
-    lines = (0..1).each_with_object("") do |idx, str|
-      str << idx.to_s
-    end
+  def empty_scorecard
+    {
+      MP: 1,
+      W: 0,
+      D: 0,
+      L: 0,
+      P: 0
+    }
   end
 end
 
