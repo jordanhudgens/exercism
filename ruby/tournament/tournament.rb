@@ -7,10 +7,6 @@
 
 class Tournament
   def initialize(input)
-    # have program automatically generate the score
-    # and store in the tally value,
-    # need to keep track of all teams since they
-    # can show up multiple times
     @tournament_data = input
     scoreboard_data = team_builder
   end
@@ -27,6 +23,11 @@ class Tournament
       .map { |game| game.split(";") }
 
     raw_data_as_array_from_str.each_with_object({}) do |game, hash|
+      # TODO
+      # now that it's working and building/saving the score. Refactor
+      # these identical processes into a shared function.
+      # Then add the points tally
+      # Then format the output
       if hash[game[0]]
         hash_el = hash[game[0]]
 
@@ -36,11 +37,23 @@ class Tournament
           D:  (game[2] == 'draw' ? (hash_el[:D] + 1) : hash_el[:D]),
           L:  (game[2] == 'loss' ? (hash_el[:L] + 1) : hash_el[:L])
         }
+
+        hash[game[0]] = hash_el
       else
-        # TODO
-        # Need to populate initial scorecard
-        # Then add to the data
         hash[game[0]] = empty_scorecard
+
+        hash_el = hash[game[0]]
+
+        game[2]
+        game[2] == 'win'  ? (hash_el[:W] + 1) : hash_el[:W]
+        hash_el = {
+          MP: hash_el[:MP] + 1,
+          W:  (game[2] == 'win'  ? (hash_el[:W] + 1) : hash_el[:W]),
+          D:  (game[2] == 'draw' ? (hash_el[:D] + 1) : hash_el[:D]),
+          L:  (game[2] == 'loss' ? (hash_el[:L] + 1) : hash_el[:L])
+        }
+
+        hash[game[0]] = hash_el
       end
 
       hash
@@ -49,11 +62,11 @@ class Tournament
 
   def empty_scorecard
     {
-      MP: 1,
-      W: 0,
-      D: 0,
-      L: 0,
-      P: 0
+      MP: 0,
+      W:  0,
+      D:  0,
+      L:  0,
+      P:  0
     }
   end
 end
