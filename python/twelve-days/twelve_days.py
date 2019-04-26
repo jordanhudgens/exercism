@@ -17,6 +17,8 @@ def recite(start_verse, end_verse):
         first_stanza = f"On the {number} of Christmas my true love gave to me: "
         # TODO
         # build list comprehension for all verses
+        # for el in lyric_map:
+        #   print(lyric_map[el])
 
     return verse_builder(lyric_map[start_verse][0])
 
