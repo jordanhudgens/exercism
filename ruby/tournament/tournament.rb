@@ -33,8 +33,10 @@ class Tournament
 
     raw_data_as_array_from_str.each_with_object({}) do |game, hash|
       # TODO
-      # now that it's working and building/saving the score. Refactor
-      # these identical processes into a shared function.
+      # Implement the other side's values
+      # The second conditional needs to flip the values, if it's a win, it should
+      # count as a loss, etc. Best solution might be to create a different
+      # method for generating the score for the right hand side
       # Then add the points tally
       # Then format the output
       if hash[game[0]]
@@ -42,6 +44,13 @@ class Tournament
       else
         hash[game[0]] = empty_scorecard
         hash[game[0]] = score_generator(game, hash[game[0]])
+      end
+
+      if hash[game[1]]
+        hash[game[1]] = score_generator(game, hash[game[1]])
+      else
+        hash[game[1]] = empty_scorecard
+        hash[game[1]] = score_generator(game, hash[game[1]])
       end
 
       hash
@@ -70,8 +79,13 @@ INPUT
 
 # p Tournament.tally(input)
 
+# expected = <<~TALLY
 # Team                           | MP |  W |  D |  L |  P
-# Allegoric Alaskans             |  1 |  1 |  0 |  0 |  3
-# Blithering Badgers             |  1 |  0 |  0 |  1 |  0
+# Devastating Donkeys            |  3 |  2 |  1 |  0 |  7
+# Allegoric Alaskans             |  3 |  2 |  0 |  1 |  6
+# Blithering Badgers             |  3 |  1 |  0 |  2 |  3
+# Courageous Californians        |  3 |  0 |  1 |  2 |  1
+# TALLY
+
 
 Tournament.new(input).team_builder
