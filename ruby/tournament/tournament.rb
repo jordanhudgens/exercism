@@ -17,6 +17,15 @@ class Tournament
     TALLY
   end
 
+  def score_generator(game, hash)
+    {
+      MP: (hash[:MP] + 1),
+      W:  (game[2] == 'win'  ? (hash[:W] + 1) : hash[:W]),
+      D:  (game[2] == 'draw' ? (hash[:D] + 1) : hash[:D]),
+      L:  (game[2] == 'loss' ? (hash[:L] + 1) : hash[:L])
+    }
+  end
+
   def team_builder
     raw_data_as_array_from_str = @tournament_data
       .split("\n")
@@ -29,31 +38,10 @@ class Tournament
       # Then add the points tally
       # Then format the output
       if hash[game[0]]
-        hash_el = hash[game[0]]
-
-        hash_el = {
-          MP: hash_el[:MP] + 1,
-          W:  (game[2] == 'win'  ? (hash_el[:W] + 1) : hash_el[:W]),
-          D:  (game[2] == 'draw' ? (hash_el[:D] + 1) : hash_el[:D]),
-          L:  (game[2] == 'loss' ? (hash_el[:L] + 1) : hash_el[:L])
-        }
-
-        hash[game[0]] = hash_el
+        hash[game[0]] = score_generator(game, hash[game[0]])
       else
         hash[game[0]] = empty_scorecard
-
-        hash_el = hash[game[0]]
-
-        game[2]
-        game[2] == 'win'  ? (hash_el[:W] + 1) : hash_el[:W]
-        hash_el = {
-          MP: hash_el[:MP] + 1,
-          W:  (game[2] == 'win'  ? (hash_el[:W] + 1) : hash_el[:W]),
-          D:  (game[2] == 'draw' ? (hash_el[:D] + 1) : hash_el[:D]),
-          L:  (game[2] == 'loss' ? (hash_el[:L] + 1) : hash_el[:L])
-        }
-
-        hash[game[0]] = hash_el
+        hash[game[0]] = score_generator(game, hash[game[0]])
       end
 
       hash
