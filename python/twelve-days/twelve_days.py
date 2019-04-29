@@ -14,11 +14,16 @@ def recite(start_verse, end_verse):
                 }
 
     def verse_builder(number):
-        first_stanza = f"On the {number} of Christmas my true love gave to me: "
-        # TODO
-        # build list comprehension for all verses
-        # for el in lyric_map:
-        #   print(lyric_map[el])
+        """
+        It's almost working. Now get the range working.
+        It's not start/end, the arguments are:
+        Start day/number of days
+        """
+        verse = f"On the {number} of Christmas my true love gave to me: "
+        for el in range(start_verse, end_verse):
+            verse = verse + lyric_map[el][1]
+
+        return verse
 
     return verse_builder(lyric_map[start_verse][0])
 
