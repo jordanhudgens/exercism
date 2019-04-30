@@ -7,8 +7,8 @@
 
 class Tournament
   def initialize(input)
+    input
     @tournament_data = input
-    scoreboard_data = team_builder
   end
 
   def self.tally(input)
@@ -17,47 +17,70 @@ class Tournament
     TALLY
   end
 
-  def score_generator_left_column(game, hash)
+  def score_generator_left_column(result, hash)
     {
       MP: (hash[:MP] + 1),
-      W:  (game[2] == 'win'  ? (hash[:W] + 1) : hash[:W]),
-      D:  (game[2] == 'draw' ? (hash[:D] + 1) : hash[:D]),
-      L:  (game[2] == 'loss' ? (hash[:L] + 1) : hash[:L])
+      W:  (result == 'win'  ? (hash[:W] + 1) : hash[:W]),
+      D:  (result == 'draw' ? (hash[:D] + 1) : hash[:D]),
+      L:  (result == 'loss' ? (hash[:L] + 1) : hash[:L]),
+      P:  point_calculator_for_left_column(result, hash)
     }
   end
 
-  def score_generator_right_column(game, hash)
+  def point_calculator_for_left_column(result, hash)
+    if result == 'win'
+      hash[:P] + 3
+    elsif result == 'draw'
+      hash[:P] + 1
+    else
+      hash[:P]
+    end
+  end
+
+  def score_generator_right_column(result, hash)
     {
       MP: (hash[:MP] + 1),
-      W:  (game[2] == 'win'  ? (hash[:L] + 1) : hash[:W]),
-      D:  (game[2] == 'draw' ? (hash[:D] + 1) : hash[:D]),
-      L:  (game[2] == 'loss' ? (hash[:W] + 1) : hash[:L])
+      L:  (result == 'win'  ? (hash[:L] + 1) : hash[:L]),
+      D:  (result == 'draw' ? (hash[:D] + 1) : hash[:D]),
+      W:  (result == 'loss' ? (hash[:W] + 1) : hash[:W]),
+      P:  point_calculator_for_right_column(result, hash)
     }
+  end
+
+  def point_calculator_for_right_column(result, hash)
+    if result == 'loss'
+      hash[:P] + 3
+    elsif result == 'draw'
+      hash[:P] + 1
+    else
+      hash[:P]
+    end
   end
 
   def team_builder
+    @tournament_data
     raw_data_as_array_from_str = @tournament_data
       .split("\n")
       .map { |game| game.split(";") }
 
+    raw_data_as_array_from_str
+
     raw_data_as_array_from_str.each_with_object({}) do |game, hash|
       # TODO
-      # Fix weird output where values
-      # aren't being counted up properly
-      # Then add the points tally
-      # Then format the output
+      # format the output
+      # Refactor
       if hash[game[0]]
-        hash[game[0]] = score_generator_left_column(game, hash[game[0]])
+        hash[game[0]] = score_generator_left_column(game[2], hash[game[0]])
       else
         hash[game[0]] = empty_scorecard
-        hash[game[0]] = score_generator_left_column(game, hash[game[0]])
+        hash[game[0]] = score_generator_left_column(game[2], hash[game[0]])
       end
 
       if hash[game[1]]
-        hash[game[1]] = score_generator_right_column(game, hash[game[1]])
+        hash[game[1]] = score_generator_right_column(game[2], hash[game[1]])
       else
         hash[game[1]] = empty_scorecard
-        hash[game[1]] = score_generator_right_column(game, hash[game[1]])
+        hash[game[1]] = score_generator_right_column(game[2], hash[game[1]])
       end
 
       hash
@@ -75,14 +98,14 @@ class Tournament
   end
 end
 
-# input = <<~INPUT
-# Allegoric Alaskans;Blithering Badgers;win
-# Devastating Donkeys;Courageous Californians;draw
-# Devastating Donkeys;Allegoric Alaskans;win
-# Courageous Californians;Blithering Badgers;loss
-# Blithering Badgers;Devastating Donkeys;loss
-# Allegoric Alaskans;Courageous Californians;win
-# INPUT
+input = <<~INPUT
+Allegoric Alaskans;Blithering Badgers;win
+Devastating Donkeys;Courageous Californians;draw
+Devastating Donkeys;Allegoric Alaskans;win
+Courageous Californians;Blithering Badgers;loss
+Blithering Badgers;Devastating Donkeys;loss
+Allegoric Alaskans;Courageous Californians;win
+INPUT
 
 # p Tournament.tally(input)
 
@@ -94,9 +117,9 @@ end
 # Courageous Californians        |  3 |  0 |  1 |  2 |  1
 # TALLY
 
-input = <<~INPUT
-Allegoric Alaskans;Blithering Badgers;win
-Blithering Badgers;Allegoric Alaskans;win
-INPUT
+# input = <<~INPUT
+# Allegoric Alaskans;Blithering Badgers;win
+# Blithering Badgers;Allegoric Alaskans;win
+# INPUT
 
-Tournament.new(input).team_builder # => {"Allegoric Alaskans"=>{:MP=>2, :W=>1, :D=>0, :L=>0}, "Blithering Badgers"=>{:MP=>2, :W=>2, :D=>0, :L=>0}}
+Tournament.new(input).team_builder
