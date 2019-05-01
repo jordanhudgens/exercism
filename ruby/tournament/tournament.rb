@@ -9,6 +9,9 @@ class Tournament
   def initialize(input)
     @tournament_data = input
     @final_scores = team_builder
+    # TODO
+    # sort nested hash
+    # https://stackoverflow.com/questions/2540435/how-to-sort-a-ruby-hash-by-number-value
   end
 
   # def self.tally(input)
