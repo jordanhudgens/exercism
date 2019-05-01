@@ -7,14 +7,25 @@
 
 class Tournament
   def initialize(input)
-    input
     @tournament_data = input
+    @final_scores = team_builder
   end
 
-  def self.tally(input)
+  # def self.tally(input)
+  #   tally_formatter(
+  # end
+
+  def tally_formatter
     scoreboard = <<~TALLY
     Team                           | MP |  W |  D |  L |  P
     TALLY
+
+    @final_scores.each_with_object(scoreboard) do |(team, score), board|
+      score_line_item = <<~LINE_ITEM
+      #{team}                          #{score[:MP]} #{score[:W]} #{score[:D]} #{score[:L]} #{score[:P]}
+      LINE_ITEM
+      board << score_line_item
+    end
   end
 
   def score_generator_left_column(result, hash)
@@ -122,4 +133,4 @@ INPUT
 # Blithering Badgers;Allegoric Alaskans;win
 # INPUT
 
-Tournament.new(input).team_builder
+puts Tournament.new(input).tally_formatter
