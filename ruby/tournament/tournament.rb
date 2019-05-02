@@ -20,12 +20,17 @@ class Tournament
     Team                           | MP |  W |  D |  L |  P
     TALLY
 
-    @final_scores.each_with_object(scoreboard) do |(team, score), board|
+    @sorted_scores.each_with_object(scoreboard) do |(team, score), board|
       score_line_item = <<~LINE_ITEM
-      #{team}                          #{score[:MP]} #{score[:W]} #{score[:D]} #{score[:L]} #{score[:P]}
+      #{team_formatter(team)}|  #{score[:MP]} |  #{score[:W]} |  #{score[:D]} |  #{score[:L]} |  #{score[:P]}
       LINE_ITEM
       board << score_line_item
     end
+  end
+
+  def team_formatter(team)
+    spaces_needed = 31 - team.length
+    team + (" " * spaces_needed)
   end
 
   def score_generator_left_column(result, hash)
