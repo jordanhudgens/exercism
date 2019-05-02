@@ -1,20 +1,11 @@
-# MP: Matches Played
-# W: Matches Won
-# D: Matches Drawn (Tied)
-# L: Matches Lost
-# P: Points
-# A win earns a team 3 points. A draw earns 1. A loss earns 0.
-
 class Tournament
-  # def initialize(input)
-  #   @tournament_data = input
-  #   @sorted_scores = team_builder.sort_by {|_key, value| value[:P]}.reverse.to_h
-  # end
-  #
-  def self.tally(input)
+  def initialize(input)
     @tournament_data = input
     @sorted_scores = team_builder.sort_by {|_key, value| value[:P]}.reverse.to_h
-    tally_formatter
+  end
+
+  def self.tally(input)
+    Tournament.new(input).tally_formatter
   end
 
   def tally_formatter
@@ -84,9 +75,6 @@ class Tournament
     raw_data_as_array_from_str
 
     raw_data_as_array_from_str.each_with_object({}) do |game, hash|
-      # TODO
-      # format the output
-      # Refactor
       if hash[game[0]]
         hash[game[0]] = score_generator_left_column(game[2], hash[game[0]])
       else
@@ -116,3 +104,17 @@ class Tournament
   end
 end
 
+
+# TODO
+# add secondary sort if points are equal
+input = <<~INPUT
+Allegoric Alaskans;Blithering Badgers;draw
+INPUT
+
+# expected = <<~TALLY
+# Team                           | MP |  W |  D |  L |  P
+# Allegoric Alaskans             |  1 |  0 |  1 |  0 |  1
+# Blithering Badgers             |  1 |  0 |  1 |  0 |  1
+# TALLY
+
+puts Tournament.tally(input)
