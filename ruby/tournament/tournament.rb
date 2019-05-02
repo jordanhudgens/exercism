@@ -6,14 +6,16 @@
 # A win earns a team 3 points. A draw earns 1. A loss earns 0.
 
 class Tournament
-  def initialize(input)
+  # def initialize(input)
+  #   @tournament_data = input
+  #   @sorted_scores = team_builder.sort_by {|_key, value| value[:P]}.reverse.to_h
+  # end
+  #
+  def self.tally(input)
     @tournament_data = input
     @sorted_scores = team_builder.sort_by {|_key, value| value[:P]}.reverse.to_h
+    tally_formatter
   end
-
-  # def self.tally(input)
-  #   tally_formatter(
-  # end
 
   def tally_formatter
     scoreboard = <<~TALLY
@@ -114,28 +116,3 @@ class Tournament
   end
 end
 
-input = <<~INPUT
-Allegoric Alaskans;Blithering Badgers;win
-Devastating Donkeys;Courageous Californians;draw
-Devastating Donkeys;Allegoric Alaskans;win
-Courageous Californians;Blithering Badgers;loss
-Blithering Badgers;Devastating Donkeys;loss
-Allegoric Alaskans;Courageous Californians;win
-INPUT
-
-# p Tournament.tally(input)
-
-# expected = <<~TALLY
-# Team                           | MP |  W |  D |  L |  P
-# Devastating Donkeys            |  3 |  2 |  1 |  0 |  7
-# Allegoric Alaskans             |  3 |  2 |  0 |  1 |  6
-# Blithering Badgers             |  3 |  1 |  0 |  2 |  3
-# Courageous Californians        |  3 |  0 |  1 |  2 |  1
-# TALLY
-
-# input = <<~INPUT
-# Allegoric Alaskans;Blithering Badgers;win
-# Blithering Badgers;Allegoric Alaskans;win
-# INPUT
-
-puts Tournament.new(input).tally_formatter
