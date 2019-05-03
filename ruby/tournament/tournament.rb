@@ -1,7 +1,7 @@
 class Tournament
   def initialize(input)
     @tournament_data = input
-    @sorted_scores = team_builder.sort_by {|_key, value| value[:P]}.reverse.to_h
+    @sorted_scores = team_builder.sort_by {|key, value| [-value[:P], key]}.to_h
   end
 
   def self.tally(input)
@@ -103,18 +103,3 @@ class Tournament
     }
   end
 end
-
-
-# TODO
-# add secondary sort if points are equal
-input = <<~INPUT
-Allegoric Alaskans;Blithering Badgers;draw
-INPUT
-
-# expected = <<~TALLY
-# Team                           | MP |  W |  D |  L |  P
-# Allegoric Alaskans             |  1 |  0 |  1 |  0 |  1
-# Blithering Badgers             |  1 |  0 |  1 |  0 |  1
-# TALLY
-
-puts Tournament.tally(input)

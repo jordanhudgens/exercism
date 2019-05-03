@@ -61,7 +61,6 @@ class TournamentTest < Minitest::Test
     assert_equal expected, Tournament.tally(input)
   end
 
-  # TODO
   def test_a_draw_is_one_point_each
     # skip
     input = <<~INPUT
@@ -78,7 +77,7 @@ class TournamentTest < Minitest::Test
   end
 
   def test_there_can_be_more_than_one_match
-    skip
+    # skip
     input = <<~INPUT
     Allegoric Alaskans;Blithering Badgers;win
     Allegoric Alaskans;Blithering Badgers;win
@@ -94,7 +93,7 @@ class TournamentTest < Minitest::Test
   end
 
   def test_there_can_be_more_than_one_winner
-    skip
+    # skip
     input = <<~INPUT
     Allegoric Alaskans;Blithering Badgers;loss
     Allegoric Alaskans;Blithering Badgers;win
@@ -110,7 +109,7 @@ class TournamentTest < Minitest::Test
   end
 
   def test_there_can_be_more_than_two_teams
-    skip
+    # skip
     input = <<~INPUT
     Allegoric Alaskans;Blithering Badgers;win
     Blithering Badgers;Courageous Californians;win
@@ -128,7 +127,7 @@ class TournamentTest < Minitest::Test
   end
 
   def test_typical_input
-    skip
+    # skip
     input = <<~INPUT
     Allegoric Alaskans;Blithering Badgers;win
     Devastating Donkeys;Courageous Californians;draw
@@ -150,7 +149,7 @@ class TournamentTest < Minitest::Test
   end
 
   def test_incomplete_competition_not_all_pairs_have_played
-    skip
+    # skip
     input = <<~INPUT
     Allegoric Alaskans;Blithering Badgers;loss
     Devastating Donkeys;Allegoric Alaskans;loss
@@ -170,7 +169,7 @@ class TournamentTest < Minitest::Test
   end
 
   def test_ties_broken_alphabetically
-    skip
+    # skip
     input = <<~INPUT
     Courageous Californians;Devastating Donkeys;win
     Allegoric Alaskans;Blithering Badgers;win
