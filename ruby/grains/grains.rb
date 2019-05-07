@@ -1,8 +1,6 @@
-# TODO
-# system works
-# now add error handling
 module Grains
   def self.square(num)
+    raise ArgumentError if (num <= 0) || (num > 64)
     return 1 if num == 1
     self.doubler(num)
   end
@@ -24,10 +22,3 @@ module Grains
   end
 end
 
-Grains.square(4)
-# 8
-
-Grains.square(16)
-# 32_768
-
-Grains.total
