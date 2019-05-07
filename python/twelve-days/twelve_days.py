@@ -14,27 +14,20 @@ def recite(start_verse, number_of_days):
                 }
 
     def verse_builder(number):
-        """
-        It's almost working. Now get the range working.
-        It's not start/end, the arguments are:
-        Start day/number of days
-        """
         verse = f"On the {number} of Christmas my true love gave to me: "
-        for key, val in lyric_map.items():
-            verse = verse + val[1]
+        day_range = list(range(1, 13))
+        day_range.reverse()
+        index_of_start_day = day_range.index(start_verse)
+        selected_days = day_range[index_of_start_day:(index_of_start_day + number_of_days)]
+
+        for day in selected_days:
+            verse = verse + lyric_map[day][1]
 
         return verse
 
     return verse_builder(lyric_map[start_verse][0])
 
 
-print(recite(5, 5,))
-
-        #  expected = ["On the fifth day of Christmas my true love gave to me: "
-        #              "five Gold Rings, "
-        #              "four Calling Birds, "
-        #              "three French Hens, "
-        #              "two Turtle Doves, "
-        #              "and a Partridge in a Pear Tree."]
-        #  self.assertEqual(recite(5, 5), expected)
-
+# TODO
+# basic functionality is working
+# now get the tests passing
