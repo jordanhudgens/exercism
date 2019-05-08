@@ -134,16 +134,18 @@ class TwelveDaysTest(unittest.TestCase):
         self.assertEqual(recite(12, 12), expected)
 
     def test_first_three_verses_of_the_song(self):
+        #  TODO
+        #  Start here
         expected = [recite(n, n)[0] for n in range(1, 4)]
         self.assertEqual(recite(1, 3), expected)
 
-    def test_three_verses_from_the_middle_of_the_song(self):
-        expected = [recite(n, n)[0] for n in range(4, 7)]
-        self.assertEqual(recite(4, 6), expected)
-
-    def test_the_whole_song(self):
-        expected = [recite(n, n)[0] for n in range(1, 13)]
-        self.assertEqual(recite(1, 12), expected)
+    #  def test_three_verses_from_the_middle_of_the_song(self):
+    #      expected = [recite(n, n)[0] for n in range(4, 7)]
+    #      self.assertEqual(recite(4, 6), expected)
+    #
+    #  def test_the_whole_song(self):
+    #      expected = [recite(n, n)[0] for n in range(1, 13)]
+    #      self.assertEqual(recite(1, 12), expected)
 
 
 if __name__ == '__main__':
