@@ -1,35 +1,47 @@
-require 'date'  # => true
+require 'date'
 
 class Robot
-  attr_accessor :name  # => nil
+  def name
+    unique = false
 
-  def initialize
-    @name = name_generator  # => 5, 5
-  end                       # => :initialize
+    until unique do
+      temp_name = run_name_generator
 
-  def name_generator
-    two_letters = ("A".."Z").to_a.sample(2).join("")    # => "SL",    "SF"
-    three_numbers = random_numbers                      # => "222",   "228"
-    name = two_letters << three_numbers                 # => "SL222", "SF228"
-    # get file reader working
-    File.open("ruby/robot-name/names.txt", 'a') do |f|  # => File, File
-      f.write(name)                                     # => 5,    5
-    end                                                 # => 5,    5
-  end                                                   # => :name_generator
+      if !stored_names.include?(temp_name)
+        add_to_file(temp_name)
+        unique = true
+      end
+    end
 
-  def random_numbers
-    DateTime.now.strftime('%Q').split("").last(3).join("")  # => "222", "228"
-  end                                                       # => :random_numbers
+    stored_names.last
+  end
+
+  def run_name_generator
+    two_letters = ("A".."Z").to_a.sample(2).join("")
+    three_numbers = (1..9).to_a.sample(3).join("")
+    two_letters << three_numbers
+  end
+
+  def add_to_file(name)
+    File.open("ruby/robot-name/names.txt", 'a') do |f|
+      f.puts name
+    end
+  end
+
+  def stored_names
+    File
+      .readlines("ruby/robot-name/names.txt")
+      .map { |name| name.gsub("\n", "") }
+  end
 
   def self.forget
     # TODO
-  end              # => :forget
+  end
 
   def reset
-    @name = name_generator
-  end                       # => :reset
-end                         # => :reset
+    name
+  end
+end
 
-Robot.new.name  # => 5
-Robot.new.name  # => 5
-
+Robot.new.name
+Robot.new.name
