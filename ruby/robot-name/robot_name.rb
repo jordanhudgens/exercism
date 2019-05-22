@@ -1,5 +1,7 @@
 require 'date'
 
+$names = []
+
 class Robot
   attr_accessor :name
 
@@ -13,13 +15,16 @@ class Robot
     until unique do
       temp_name = run_name_generator
 
-      if !stored_names.include?(temp_name)
-        add_to_file(temp_name)
+      # TODO
+      # put a counter here to see if this is getting run too many times
+      # it needs to be around 14 times faster
+      if !$names.include?(temp_name)
+        $names << temp_name
         unique = true
       end
     end
 
-    stored_names.last
+    $names.last
   end
 
   def run_name_generator
@@ -28,26 +33,10 @@ class Robot
     two_letters << three_numbers
   end
 
-  def add_to_file(name)
-    File.open("ruby/robot-name/names.txt", 'a') do |f|
-      f.puts name
-    end
-  end
-
-  def stored_names
-    File
-      .readlines("ruby/robot-name/names.txt")
-      .map { |name| name.gsub("\n", "") }
-  end
-
   def self.forget
-    # TODO
   end
 
   def reset
     @name = name_builder
   end
 end
-
-Robot.new.name # => "KQ798"
-Robot.new.name # => "IA827"
