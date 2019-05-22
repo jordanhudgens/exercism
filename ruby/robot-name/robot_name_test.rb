@@ -72,7 +72,7 @@ class RobotTest < Minitest::Test
   end
 
   def test_generate_all_robots
-    skip
+    # skip
     all_names_count = 26 * 26 * 1000
     time_limit = Time.now + 60 # seconds
     seen_names = Hash.new(0)

@@ -1,7 +1,13 @@
 require 'date'
 
 class Robot
-  def name
+  attr_accessor :name
+
+  def initialize
+    @name = name_builder
+  end
+
+  def name_builder
     unique = false
 
     until unique do
@@ -39,9 +45,9 @@ class Robot
   end
 
   def reset
-    name
+    @name = name_builder
   end
 end
 
-Robot.new.name
-Robot.new.name
+Robot.new.name # => "KQ798"
+Robot.new.name # => "IA827"
