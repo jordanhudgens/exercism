@@ -33,7 +33,13 @@ defmodule NucleotideCount do
   def histogram(strand) do
     # require IEx; IEx.pry
     # IO.inspect binding()
-    IO.puts(@nucleotides)
+    # IO.puts(@nucleotides)
+    #
+    # TODO
+    # Take it from here to turn into the key value pair
+    # split the string into a list:
+    # String.graphemes(strand)
+    # |> Enum.map(fn char -> ... end)
   end
 end
 
